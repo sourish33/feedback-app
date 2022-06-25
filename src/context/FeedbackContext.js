@@ -53,7 +53,6 @@ export const FeedbackProvider = ({children}) =>{
     }
 
     const remove = (id) =>{
-        console.log("Hello!!!")
         if (window.confirm("Are you sure you want to delete this?")){
             setFeedback(arr=>arr.filter((el)=>el.id!==id))
         }
