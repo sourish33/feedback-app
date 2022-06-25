@@ -12,7 +12,7 @@ function FeedbackForm() {
     const [rating, setRating] = useState(10)
 
     const getRating = (ratingVal) => {
-        console.log("About to set rating to", ratingVal)
+        // console.log("About to set rating to", ratingVal)
         setRating(ratingVal)
     }
     const sendNewRatingInfo = (e)  =>{
@@ -20,9 +20,9 @@ function FeedbackForm() {
         if (editFeedback.edit){
             add(rating, text, editFeedback.item.id)
             closeFeedbackEditing()
-            return
-        }
+        } else {
         add(rating, text)
+        }
         setText("")
     }
     const handleTextChange = (e) => {
@@ -30,7 +30,7 @@ function FeedbackForm() {
     }
 
     useEffect(()=>{
-        console.log(editFeedback)
+        // console.log(editFeedback)
         if (editFeedback.edit){
             setRating(editFeedback.item.rating)
             setText(editFeedback.item.text)
