@@ -35,10 +35,23 @@ export const FeedbackProvider = ({children}) =>{
         })
     }
 
-    const add = (rating, text) =>{
-        
-        const newFeedback = {id: uuid(), rating: rating, text: text}
-        setFeedback(x=>[ newFeedback, ...x])
+    const closeFeedbackEditing = () =>{
+        setEditFeedback(x=>{
+            const newEditFeedback = {...x, edit: false}
+            return newEditFeedback
+        })
+    }
+
+    const add = (rating, text, id=null) =>{
+        if (!id) {
+            console.log('going into id null, id: '+id)
+            const newFeedback = {id: uuid(), rating: rating, text: text}
+            setFeedback(x=>[ newFeedback, ...x])
+            return
+        } 
+        console.log('going into id NOT null, id: '+id)
+        const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
+        setFeedback(updatedFeedback)
     }
 
     const remove = (id) =>{
@@ -50,9 +63,11 @@ export const FeedbackProvider = ({children}) =>{
 
     return <FeedbackContext.Provider value = {{
             feedback,
+            editFeedback,
             remove,
             add,
-            updateFeedback
+            updateFeedback,
+            closeFeedbackEditing
     }}>
         {children}
 

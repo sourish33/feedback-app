@@ -13,7 +13,6 @@ function FeedbackItem({item}) {
 
 
     const handleEditClick = () =>{
-        console.log(item)
         updateFeedback(item)
     }
 

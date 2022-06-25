@@ -1,13 +1,13 @@
 import React from "react"
 import Card from "./shared/Card"
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import Button from "./shared/Button"
 import RatingSelect from "./RatingSelect"
 import FeedbackContext from '../context/FeedbackContext'
 
 function FeedbackForm() {
 
-    const {add} = useContext(FeedbackContext)
+    const {add, editFeedback, closeFeedbackEditing} = useContext(FeedbackContext)
     const [text, setText] = useState("")
     const [rating, setRating] = useState(10)
 
@@ -17,12 +17,26 @@ function FeedbackForm() {
     }
     const sendNewRatingInfo = (e)  =>{
         e.preventDefault()
+        if (editFeedback.edit){
+            add(rating, text, editFeedback.item.id)
+            closeFeedbackEditing()
+            return
+        }
         add(rating, text)
         setText("")
     }
     const handleTextChange = (e) => {
         setText(e.target.value)
     }
+
+    useEffect(()=>{
+        console.log(editFeedback)
+        if (editFeedback.edit){
+            setRating(editFeedback.item.rating)
+            setText(editFeedback.item.text)
+        }
+    }, [editFeedback])
+
     return (
         <Card>
             <h2>How would you rate your experience?</h2>
