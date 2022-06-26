@@ -1,0 +1,29 @@
+{
+  "feedback": [
+    {
+      "id": 1,
+      "rating": 10,
+      "text": "This is from json server"
+    },
+    {
+      "id": 2,
+      "rating": 10,
+      "text": "This is a truly awesome product"
+    },
+    {
+      "id": 3,
+      "rating": 9,
+      "text": "Very good, but improvements are possible"
+    },
+    {
+      "id": 4,
+      "rating": 1,
+      "text": "Very bad. I just hated it and wouldn't recommend"
+    },
+    {
+      "text": "This is fantastic. Loved it!",
+      "rating": "9",
+      "id": 5
+    }
+  ]
+}
