@@ -6,6 +6,7 @@ const FeedbackContext = createContext()
 export const FeedbackProvider = ({children}) =>{
 
     const [feedback, setFeedback] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const [editFeedback, setEditFeedback] = useState({
         item: {},
@@ -16,11 +17,18 @@ export const FeedbackProvider = ({children}) =>{
         fetchFeedback()
     }, [])
 
+    // function timeout(ms) {
+    //     return new Promise(resolve => setTimeout(resolve, ms));
+    // }
+
     //Fetch feedback
     const fetchFeedback = async () =>{
-        const response = await fetch('http://localhost:5000/feedback?_sort=id&order=desc')
+        setLoading(true)
+        const response = await fetch('/feedback?_sort=id&order=desc')
         const data = await response.json()
+        //await timeout(3000) //forces wait for 3 sec
         setFeedback(data)
+        setLoading(false)
     }
 
     const updateFeedback = (item) =>{
@@ -56,6 +64,7 @@ export const FeedbackProvider = ({children}) =>{
     return <FeedbackContext.Provider value = {{
             feedback,
             editFeedback,
+            loading,
             remove,
             add,
             updateFeedback,
