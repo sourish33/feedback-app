@@ -23,9 +23,10 @@ export const FeedbackProvider = ({children}) =>{
     //Fetch feedback
     const fetchFeedback = async () =>{
         setLoading(true)
-        const response = await fetch('/feedback?_sort=id&order=asc')
+        const response = await fetch('/feedback')
         const data = await response.json()
         //await timeout(3000) //forces wait for 3 sec
+        data.sort((a, b) => (a.id > b.id) ? -1 : 1)
         setFeedback(data)
         setLoading(false)
     }
@@ -56,7 +57,6 @@ export const FeedbackProvider = ({children}) =>{
                 body: JSON.stringify(reqbody)
             })
             const newFeedback = await response.json()
-            // console.log(newFeedback)
             setFeedback(x=>[ newFeedback, ...x])
             return
         } 
