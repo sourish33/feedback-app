@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import uuid from "react-uuid";
 
 const FeedbackContext = createContext()
 
@@ -45,10 +44,20 @@ export const FeedbackProvider = ({children}) =>{
         })
     }
 
-    const add = (rating, text, id=null) =>{
+    const add = async (rating, text, id=null) =>{
         if (!id) {
-            const newFeedback = {id: uuid(), rating: rating, text: text}
-            setFeedback(x=>[ newFeedback, ...x])
+            const reqbody = {rating, text}
+            console.log("about to send", reqbody)
+            const response = await fetch('http://localhost:5000/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reqbody)
+            })
+            const newFeedback = await response.json()
+            console.log(newFeedback)
+            // setFeedback(x=>[ newFeedback, ...x])
             return
         } 
         const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
