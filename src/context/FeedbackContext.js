@@ -23,7 +23,7 @@ export const FeedbackProvider = ({children}) =>{
     //Fetch feedback
     const fetchFeedback = async () =>{
         setLoading(true)
-        const response = await fetch('/feedback?_sort=id&order=desc')
+        const response = await fetch('/feedback?_sort=id&order=asc')
         const data = await response.json()
         //await timeout(3000) //forces wait for 3 sec
         setFeedback(data)
@@ -48,7 +48,7 @@ export const FeedbackProvider = ({children}) =>{
         if (!id) {
             const reqbody = {rating, text}
             console.log("about to send", reqbody)
-            const response = await fetch('http://localhost:5000/feedback', {
+            const response = await fetch('/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,8 +56,8 @@ export const FeedbackProvider = ({children}) =>{
                 body: JSON.stringify(reqbody)
             })
             const newFeedback = await response.json()
-            console.log(newFeedback)
-            // setFeedback(x=>[ newFeedback, ...x])
+            // console.log(newFeedback)
+            setFeedback(x=>[ newFeedback, ...x])
             return
         } 
         const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
