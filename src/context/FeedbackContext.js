@@ -78,8 +78,11 @@ export const FeedbackProvider = ({children}) =>{
         // setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
     }
 
-    const remove = (id) =>{
+    const remove = async (id) =>{
         if (window.confirm("Are you sure you want to delete this?")){
+            await fetch(`/feedback/${id}`, {
+                method: 'DELETE',
+            })
             setFeedback(arr=>arr.filter((el)=>el.id!==id))
         }
     }
