@@ -57,11 +57,25 @@ export const FeedbackProvider = ({children}) =>{
                 body: JSON.stringify(reqbody)
             })
             const newFeedback = await response.json()
-            setFeedback(x=>[ newFeedback, ...x])
+            setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
             return
         } 
-        const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
-        setFeedback(updatedFeedback)
+        const reqbody = {text, rating}
+        // const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
+        const response = await fetch(`/feedback/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reqbody)
+        })
+
+        const newFeedback = await response.json()
+        console.log(newFeedback)
+        setFeedback(x=>{
+            return x.map(el=>el.id===newFeedback.id ? {...el, text}: el)
+        })
+        // setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
     }
 
     const remove = (id) =>{
