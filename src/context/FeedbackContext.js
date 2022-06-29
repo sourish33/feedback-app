@@ -49,7 +49,7 @@ export const FeedbackProvider = ({children}) =>{
         if (!id) {
             const reqbody = {rating, text}
             //console.log("about to send", reqbody)
-            const response = await fetch('/feedback', {
+            const response = await fetch('https://aqueous-island-57820.herokuapp.com/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ export const FeedbackProvider = ({children}) =>{
         } 
         const reqbody = {text, rating}
         // const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
-        const response = await fetch(`/feedback/${id}`, {
+        const response = await fetch(`https://aqueous-island-57820.herokuapp.com/feedback/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
