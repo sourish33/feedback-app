@@ -79,7 +79,7 @@ export const FeedbackProvider = ({children}) =>{
 
     const remove = async (id) =>{
         if (window.confirm("Are you sure you want to delete this?")){
-            await fetch(`/feedback/${id}`, {
+            await fetch(`https://aqueous-island-57820.herokuapp.com/feedback/${id}`, {
                 method: 'DELETE',
             })
             setFeedback(arr=>arr.filter((el)=>el._id!==id))
