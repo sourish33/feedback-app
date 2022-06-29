@@ -23,11 +23,11 @@ export const FeedbackProvider = ({children}) =>{
     //Fetch feedback
     const fetchFeedback = async () =>{
         setLoading(true)
-        const response = await fetch('/feedback')
+        const response = await fetch('https://aqueous-island-57820.herokuapp.com/feedback')
         const data = await response.json()
         //await timeout(3000) //forces wait for 3 sec
-        data.sort((a, b) => (a.id > b.id) ? -1 : 1)
-        setFeedback(data)
+        // data.sort((a, b) => (a.id > b.id) ? -1 : 1)
+        setFeedback(data.feedbackItems)
         setLoading(false)
     }
 
