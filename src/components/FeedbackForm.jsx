@@ -18,7 +18,7 @@ function FeedbackForm() {
     const sendNewRatingInfo = (e)  =>{
         e.preventDefault()
         if (editFeedback.edit){
-            add(rating, text, editFeedback.item.id)
+            add(rating, text, editFeedback.item._id)
             closeFeedbackEditing()
         } else {
         add(rating, text)

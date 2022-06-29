@@ -8,7 +8,7 @@ import FeedbackContext from '../context/FeedbackContext'
 
 function FeedbackItem({item}) {
 
-    const {id, rating, text} = item
+    const {_id:id, rating, text} = item
     const {remove, updateFeedback} = useContext(FeedbackContext)
 
 

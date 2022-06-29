@@ -48,7 +48,7 @@ export const FeedbackProvider = ({children}) =>{
     const add = async (rating, text, id=null) =>{
         if (!id) {
             const reqbody = {rating, text}
-            console.log("about to send", reqbody)
+            //console.log("about to send", reqbody)
             const response = await fetch('/feedback', {
                 method: 'POST',
                 headers: {
@@ -70,10 +70,9 @@ export const FeedbackProvider = ({children}) =>{
             body: JSON.stringify(reqbody)
         })
 
-        const newFeedback = await response.json()
-        console.log(newFeedback)
+        await response.json()
         setFeedback(x=>{
-            return x.map(el=>el.id===newFeedback.id ? {...el, text}: el)
+            return x.map(el=>el._id===id ? {...el, text, rating}: el)
         })
         // setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
     }
