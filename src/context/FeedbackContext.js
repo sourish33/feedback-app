@@ -57,7 +57,7 @@ export const FeedbackProvider = ({children}) =>{
                 body: JSON.stringify(reqbody)
             })
             const newFeedback = await response.json()
-            setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
+            setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1))
             return
         } 
         const reqbody = {text, rating}
@@ -82,7 +82,7 @@ export const FeedbackProvider = ({children}) =>{
             await fetch(`/feedback/${id}`, {
                 method: 'DELETE',
             })
-            setFeedback(arr=>arr.filter((el)=>el.id!==id))
+            setFeedback(arr=>arr.filter((el)=>el._id!==id))
         }
     }
 
