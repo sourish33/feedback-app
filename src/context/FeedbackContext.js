@@ -49,7 +49,7 @@ export const FeedbackProvider = ({children}) =>{
         if (!id) {
             const reqbody = {rating, text}
             //console.log("about to send", reqbody)
-            const response = await fetch('https://aqueous-island-57820.herokuapp.com/feedback', {
+            const response = await fetch('feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
