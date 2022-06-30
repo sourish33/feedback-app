@@ -62,7 +62,7 @@ export const FeedbackProvider = ({children}) =>{
         } 
         const reqbody = {text, rating}
         // const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
-        const response = await fetch(`https://aqueous-island-57820.herokuapp.com/feedback/${id}`, {
+        const response = await fetch(`feedback/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
