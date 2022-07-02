@@ -6,7 +6,6 @@ import FeedbackList from "./components/FeedbackList"
 import FeedbackStats from "./components/FeedbackStats"
 import Header from "./components/Header"
 import AboutPage from "./components/pages/AboutPage"
-// import feedbackData from "./data/feedbackData"
 import { FeedbackProvider } from "./context/FeedbackContext"
 
 
@@ -15,8 +14,6 @@ import { FeedbackProvider } from "./context/FeedbackContext"
 
 
 function App() {
-
-    // const [feedback, setFeedback]= useState(feedbackData)
 
     return (
         <FeedbackProvider>

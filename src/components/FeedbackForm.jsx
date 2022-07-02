@@ -1,15 +1,17 @@
 import React from "react"
 import Card from "./shared/Card"
-import { useState, useContext, useEffect } from "react"
+import { useState, useContext, useEffect} from "react"
 import Button from "./shared/Button"
 import RatingSelect from "./RatingSelect"
 import FeedbackContext from '../context/FeedbackContext'
 
 function FeedbackForm() {
 
-    const {add, editFeedback, closeFeedbackEditing} = useContext(FeedbackContext)
+    const {add, editFeedback, closeFeedbackEditing, myRef} = useContext(FeedbackContext)
     const [text, setText] = useState("")
     const [rating, setRating] = useState(10)
+
+   
 
     const getRating = (ratingVal) => {
         // console.log("About to set rating to", ratingVal)
@@ -39,10 +41,10 @@ function FeedbackForm() {
 
     return (
         <Card>
-            <h2>How would you rate your experience?</h2>
+            <h2 ref={myRef}>How would you rate this feedback app?</h2>
             <RatingSelect getRating={getRating}/>
             <form onSubmit={sendNewRatingInfo}>
-                <div className="input-group">
+                <div   className="input-group">
                     <input
                         onChange={handleTextChange}
                         type="text"

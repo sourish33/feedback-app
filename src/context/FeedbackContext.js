@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useRef } from "react";
 
 const FeedbackContext = createContext()
 
@@ -6,6 +6,7 @@ export const FeedbackProvider = ({children}) =>{
 
     const [feedback, setFeedback] = useState([])
     const [loading, setLoading] = useState(false)
+    const myRef = useRef(null)
 
     const [editFeedback, setEditFeedback] = useState({
         item: {},
@@ -20,6 +21,16 @@ export const FeedbackProvider = ({children}) =>{
     //     return new Promise(resolve => setTimeout(resolve, ms));
     // }
 
+    //scroll back to form upon trying to edit
+    const executeScroll = () => {
+        console.log("Execute scroll invoked")
+        myRef.current.scrollIntoView() 
+    }
+
+    const sortByUpdatedAt = (arr) =>{
+        return arr.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1)
+    }
+
     //Fetch feedback
     const fetchFeedback = async () =>{
         setLoading(true)
@@ -27,7 +38,7 @@ export const FeedbackProvider = ({children}) =>{
         const data = await response.json()
         //await timeout(3000) //forces wait for 3 sec
         // data.sort((a, b) => (a.id > b.id) ? -1 : 1)
-        setFeedback(data.feedbackItems)
+        setFeedback(sortByUpdatedAt(data.feedbackItems))
         setLoading(false)
     }
 
@@ -57,11 +68,10 @@ export const FeedbackProvider = ({children}) =>{
                 body: JSON.stringify(reqbody)
             })
             const newFeedback = await response.json()
-            setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1))
+            setFeedback(x=>sortByUpdatedAt([ newFeedback, ...x]))
             return
         } 
         const reqbody = {text, rating}
-        // const updatedFeedback = feedback.map(el => el.id === id ? {id, text, rating} : el)
         const response = await fetch(`https://aqueous-island-57820.herokuapp.com/feedback/${id}`, {
             method: 'PATCH',
             headers: {
@@ -70,11 +80,13 @@ export const FeedbackProvider = ({children}) =>{
             body: JSON.stringify(reqbody)
         })
 
-        await response.json()
-        setFeedback(x=>{
-            return x.map(el=>el._id===id ? {...el, text, rating}: el).sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1)
-        })
-        // setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
+        const {status, updated}= await response.json()
+        if (status==="Success") {
+         setFeedback(x=>sortByUpdatedAt([updated, ...x]))
+        } else{
+            console.log("Patch Request failed: ")
+            console.log(status, updated)
+        }
     }
 
     const remove = async (id) =>{
@@ -90,10 +102,12 @@ export const FeedbackProvider = ({children}) =>{
             feedback,
             editFeedback,
             loading,
+            myRef,
             remove,
             add,
             updateFeedback,
-            closeFeedbackEditing
+            closeFeedbackEditing,
+            executeScroll
     }}>
         {children}
 

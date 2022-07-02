@@ -9,10 +9,11 @@ import FeedbackContext from '../context/FeedbackContext'
 function FeedbackItem({item}) {
 
     const {_id:id, rating, text} = item
-    const {remove, updateFeedback} = useContext(FeedbackContext)
+    const {remove, updateFeedback, executeScroll} = useContext(FeedbackContext)
 
 
     const handleEditClick = () =>{
+        executeScroll()
         updateFeedback(item)
     }
 
