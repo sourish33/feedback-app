@@ -23,7 +23,6 @@ export const FeedbackProvider = ({children}) =>{
 
     //scroll back to form upon trying to edit
     const executeScroll = () => {
-        console.log("Execute scroll invoked")
         myRef.current.scrollIntoView() 
     }
 
@@ -82,7 +81,12 @@ export const FeedbackProvider = ({children}) =>{
 
         const {status, updated}= await response.json()
         if (status==="Success") {
-         setFeedback(x=>sortByUpdatedAt([updated, ...x]))
+         setFeedback(x=>{
+            let updated_x = x.map(el=>{
+                return el._id===updated._id ? updated : el
+            })
+            return sortByUpdatedAt(updated_x)
+         })
         } else{
             console.log("Patch Request failed: ")
             console.log(status, updated)
