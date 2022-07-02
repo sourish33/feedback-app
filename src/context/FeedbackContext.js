@@ -72,7 +72,7 @@ export const FeedbackProvider = ({children}) =>{
 
         await response.json()
         setFeedback(x=>{
-            return x.map(el=>el._id===id ? {...el, text, rating}: el)
+            return x.map(el=>el._id===id ? {...el, text, rating}: el).sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1)
         })
         // setFeedback(x=>[ newFeedback, ...x].sort((a, b) => (a.id > b.id) ? -1 : 1))
     }
@@ -82,7 +82,7 @@ export const FeedbackProvider = ({children}) =>{
             await fetch(`https://aqueous-island-57820.herokuapp.com/feedback/${id}`, {
                 method: 'DELETE',
             })
-            setFeedback(arr=>arr.filter((el)=>el._id!==id))
+            setFeedback(arr=>arr.filter((el)=>el._id!==id).sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1))
         }
     }
 
