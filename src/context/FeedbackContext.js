@@ -13,13 +13,19 @@ export const FeedbackProvider = ({children}) =>{
         edit: false
     })
 
+        //Fetch feedback
     useEffect(()=>{
+        const fetchFeedback = async () =>{
+            setLoading(true)
+            const response = await fetch('https://aqueous-island-57820.herokuapp.com/feedback')
+            const data = await response.json()
+            setFeedback(sortByUpdatedAt(data.feedbackItems))
+            setLoading(false)
+        }
+        
         fetchFeedback()
     }, [])
 
-    // function timeout(ms) {
-    //     return new Promise(resolve => setTimeout(resolve, ms));
-    // }
 
     //scroll back to form upon trying to edit
     const executeScroll = () => {
@@ -30,16 +36,7 @@ export const FeedbackProvider = ({children}) =>{
         return arr.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1)
     }
 
-    //Fetch feedback
-    const fetchFeedback = async () =>{
-        setLoading(true)
-        const response = await fetch('https://aqueous-island-57820.herokuapp.com/feedback')
-        const data = await response.json()
-        //await timeout(3000) //forces wait for 3 sec
-        // data.sort((a, b) => (a.id > b.id) ? -1 : 1)
-        setFeedback(sortByUpdatedAt(data.feedbackItems))
-        setLoading(false)
-    }
+
 
     const updateFeedback = (item) =>{
         setEditFeedback({
