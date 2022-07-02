@@ -22,8 +22,20 @@ export const FeedbackProvider = ({children}) =>{
             setFeedback(sortByUpdatedAt(data.feedbackItems))
             setLoading(false)
         }
+        const fetchFeedbackSilent = async () =>{
+            const response = await fetch('https://aqueous-island-57820.herokuapp.com/feedback')
+            const data = await response.json()
+            setFeedback(x=>sortByUpdatedAt(data.feedbackItems))
+        }
+
+        fetchFeedback() 
         
-        fetchFeedback()
+        const interval=setInterval(()=>{
+            fetchFeedbackSilent()
+           },10000)
+             
+             
+        return()=>clearInterval(interval)
     }, [])
 
 
